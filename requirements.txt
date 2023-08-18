@@ -2,3 +2,4 @@ mkdocs
 mkdocs-material
 markdown-include
 mkdocs-awesome-pages-plugin
+mkdocs-exclude-search

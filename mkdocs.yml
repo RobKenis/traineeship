@@ -3,6 +3,9 @@ repo_url: https://github.com/RobKenis/traineeship
 repo_name: RobKenis/traineeship
 plugins:
   - search
+  - exclude-search:
+      exclude:
+        - content/*
   - awesome-pages
 theme:
   name: material
