@@ -20,7 +20,7 @@ to run applications and services in the cloud, store data, and even host website
 - Launch the instance!
 
 ```shell
- aws ec2 run-instances --image-id ami-089950bc622d39ed8 --instance-type t2.nano --key-name rob --region eu-west-1
+ aws ec2 run-instances --image-id ami-089950bc622d39ed8 --instance-type t2.micro --key-name rob --region eu-west-1
 ```
 
 ### Connecting to the EC2 instance
