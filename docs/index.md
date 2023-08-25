@@ -1,3 +1,3 @@
 # Home
 
-Hello
+## How to use this course

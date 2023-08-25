@@ -1,16 +1,12 @@
 site_name: Axxes Traineeship
 repo_url: https://github.com/RobKenis/traineeship
 repo_name: RobKenis/traineeship
+
 plugins:
   - search
-  - exclude-search:
-      exclude:
-        - content/*
-  - awesome-pages
+
 theme:
   name: material
-  features:
-    - navigation.tabs
   icon:
     repo: fontawesome/brands/github
   palette:
@@ -25,6 +21,17 @@ theme:
         icon: material/brightness-4
         name: Switch to light mode
 
+nav:
+  - Welcome: index.md
+  - Console: content/aws/console/introduction.md
+  - EC2: content/aws/ec2/setting-up.md
+  - CloudFormation: content/aws/cloudformation/index.md
+  - Ansible: content/ansible/aws.md
+  - Elastic Container Service: content/aws/ecs/index.md
+  - Route53: content/aws/route53/index.md
+  - Simple Storage Service: content/aws/s3/index.md
+  - Lambda: content/aws/lambda/index.md
+
 markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
@@ -34,5 +41,3 @@ markdown_extensions:
   - pymdownx.snippets:
       base_path: .
   - pymdownx.superfences
-  - markdown_include.include:
-      base_path: docs
