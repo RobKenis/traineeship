@@ -1,4 +1,4 @@
-## Infrastructure as Code
+# Infrastructure as Code
 
 [CloudFormation](https://aws.amazon.com/cloudformation/) is the AWS solution to do infrastructure as code. Instead of
 manually configuring resources, you can define these in YAML or JSON format and apply these configurations in the

@@ -1,0 +1,57 @@
+---
+Description: CloudFront for a static website in S3
+Parameters:
+  WebsiteEndpoint:
+    Type: String
+    Default: rob-s3-bucket-bucket-v8h2xf4ez5xv.s3-website-eu-west-1.amazonaws.com
+    Description: The static hosting endpoint of a website on S3
+  DomainName:
+    Type: String
+    Default: website-van-rob.traineeship-2021.axxes.cloud
+    Description: DNS name to attach to your CloudFront
+Resources:
+  Certificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: !Ref DomainName
+      ValidationMethod: DNS
+      DomainValidationOptions:
+        - DomainName: !Ref DomainName
+          HostedZoneId: Z07011291DYPENE0XZTE8
+  CloudFront:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Aliases:
+          - !Ref DomainName
+        Enabled: True
+        Origins:
+          - Id: default
+            DomainName: !Ref WebsiteEndpoint
+            CustomOriginConfig:
+              OriginProtocolPolicy: http-only
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+          CachedMethods:
+            - GET
+            - HEAD
+          TargetOriginId: default
+          ViewerProtocolPolicy: redirect-to-https
+          ForwardedValues:
+            QueryString: False
+        PriceClass: PriceClass_100
+        ViewerCertificate:
+          AcmCertificateArn: !Ref Certificate
+          SslSupportMethod: sni-only
+
+  DNSRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: Z07011291DYPENE0XZTE8
+      Name: !Ref DomainName
+      Type: A
+      AliasTarget:
+        DNSName: !GetAtt CloudFront.DomainName
+        HostedZoneId: Z2FDTNDATAQYW2

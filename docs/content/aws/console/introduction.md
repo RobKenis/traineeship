@@ -1,18 +1,18 @@
-## AWS Console
+# AWS Console
 
-### Logging in
+## Logging in
 
 Axxes accounts are managed through Active Directory. In the top left corner in Outlook, there should be a button with
 **AWS SSO**. A menu should show up with all available accounts, pick **traineeship-2023**
 https://axxes.awsapps.com/start#/
 
-### Picking a region
+## Picking a region
 
 In the top right corner in the AWS console, there's a dropdown with available regions. For this session, we will use
 **eu-west-1**. More information on regions and availability zones can be
 found [here](https://aws.amazon.com/about-aws/global-infrastructure/regions_az/).
 
-### Service overview
+## Service overview
 
 In the top left corner, open **services** to get a look at all available services in AWS.
 

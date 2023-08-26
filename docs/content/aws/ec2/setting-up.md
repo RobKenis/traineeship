@@ -1,11 +1,11 @@
-## Setting up a server
+# Setting up a server
 
-### Introduction to EC2
+## Introduction to EC2
 
 Amazon Elastic Compute Cloud (EC2) is a service that allows you to launch virtual servers in the cloud. You can use EC2
 to run applications and services in the cloud, store data, and even host websites.
 
-### Creating an EC2 instance
+## Creating an EC2 instance
 
 - Navigate to the **EC2** console
 - Pick **launch instance**, it should be a bright orange button.
@@ -23,7 +23,7 @@ to run applications and services in the cloud, store data, and even host website
  aws ec2 run-instances --image-id ami-089950bc622d39ed8 --instance-type t2.micro --key-name rob --region eu-west-1
 ```
 
-### Connecting to the EC2 instance
+## Connecting to the EC2 instance
 
 There are multiple ways to connect to a running EC2 instance, but I prefer **ssh**.
 
