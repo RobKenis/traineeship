@@ -27,6 +27,7 @@ nav:
   - EC2: content/aws/ec2/setting-up.md
   - CloudFormation: content/aws/cloudformation/index.md
   - Ansible: content/ansible/aws.md
+  - Networking: content/aws/networking/index.md
   - Elastic Container Service: content/aws/ecs/index.md
   - DNS and Service Discovery: content/aws/route53/index.md
   - Simple Storage Service: content/aws/s3/index.md
