@@ -31,7 +31,7 @@ aws s3api put-object --bucket <bucket> --key test.json --body test.json --acl pu
 Upload index.html
 
 ```html
---8<-- "docs/content/aws/s3/index.html"
+--8<-- "docs/content/aws/s3/site/index.html"
 ```
 
 ```shell
@@ -41,7 +41,7 @@ aws s3api put-object --bucket <bucket> --key index.html --body index.html --acl 
 Add some styling
 
 ```css
---8<-- "docs/content/aws/s3/main.css"
+--8<-- "docs/content/aws/s3/site/main.css"
 ```
 
 ```shell
