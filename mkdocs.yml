@@ -28,7 +28,7 @@ nav:
   - CloudFormation: content/aws/cloudformation/index.md
   - Ansible: content/ansible/aws.md
   - Elastic Container Service: content/aws/ecs/index.md
-  - Route53: content/aws/route53/index.md
+  - DNS and Service Discovery: content/aws/route53/index.md
   - Simple Storage Service: content/aws/s3/index.md
   - Lambda: content/aws/lambda/index.md
 
