@@ -4,6 +4,7 @@ repo_name: RobKenis/traineeship
 
 plugins:
   - search
+  - git-revision-date-localized
 
 theme:
   name: material
