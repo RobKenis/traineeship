@@ -1,0 +1,9 @@
+---
+Description: Cloud Map namespace
+Resources:
+  Namespace:
+    Type: AWS::ServiceDiscovery::PrivateDnsNamespace
+    Properties:
+      Name: example.com
+      Description: !Ref AWS::StackName
+      Vpc: !Ref VPC
