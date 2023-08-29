@@ -9,3 +9,7 @@ for hosting containers, which we will later replace by a managed service to redu
 
 - [AWS Free Tier](https://aws.amazon.com/free/)
 - [AWS Training](https://aws.amazon.com/training/)
+
+## Questions
+
+Reach out to :email: *rob.kenis@axxes.com* or :fontawesome-brands-slack: *@robkenis*
