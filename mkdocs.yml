@@ -27,14 +27,17 @@ nav:
   - Console: content/aws/console/introduction.md
   - EC2: content/aws/ec2/setting-up.md
   - CloudFormation: content/aws/cloudformation/index.md
-  - Ansible: content/ansible/aws.md
+#  - Ansible: content/ansible/aws.md
   - Networking: content/aws/networking/index.md
+  - DynamoDB: content/aws/dynamodb/index.md
+  - AWS SDK: content/aws/sdk/index.md
   - Elastic Container Service: content/aws/ecs/index.md
   - DNS and Service Discovery: content/aws/route53/index.md
-  - Monitoring: content/aws/monitoring/index.md
+#  - Monitoring: content/aws/monitoring/index.md
   - Simple Storage Service: content/aws/s3/index.md
+  - Messaging: content/aws/messaging/index.md
   - Lambda: content/aws/lambda/index.md
-  - Grand Finale: content/aws/final/index.md
+#  - Grand Finale: content/aws/final/index.md
 
 markdown_extensions:
   - admonition
