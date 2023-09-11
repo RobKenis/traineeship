@@ -38,6 +38,7 @@ nav:
   - Messaging: content/aws/messaging/index.md
   - Lambda: content/aws/lambda/index.md
 #  - Grand Finale: content/aws/final/index.md
+  - Build something: content/aws/final/development.md
 
 markdown_extensions:
   - admonition
