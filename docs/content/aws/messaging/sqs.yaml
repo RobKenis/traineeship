@@ -1,0 +1,7 @@
+---
+Description: SQS Queue
+Resources:
+  Queue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Ref AWS::StackName
