@@ -6,7 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import java.util.HashMap;
 import java.util.List;
 
-@ApplicationScoped
+//@ApplicationScoped
 public class InMemoryRepository implements TodoRepository {
 
     private final HashMap<String, Todo> todos = new HashMap<>();

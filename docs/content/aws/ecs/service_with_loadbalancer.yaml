@@ -41,6 +41,9 @@ Resources:
                   - "logs:CreateLogStream"
                   - "logs:PutLogEvents"
                   - "dynamodb:PutItem"
+                  - "dynamodb:Scan"
+                  - "sqs:ReceiveMessage"
+                  - "sqs:DeleteMessage"
                 Resource: '*'
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
@@ -95,9 +98,9 @@ Resources:
           SecurityGroups:
             - !GetAtt SecurityGroup.GroupId
           Subnets:
-            - subnet-0c412b2893e1cc980
-            - subnet-0de05c6b8c43703c5
-            - subnet-061a8897e8694d873
+            - subnet-0bd479863cc99d545
+            - subnet-0f8409b09ee773f89
+            - subnet-0b049c3b1b98f38c6
     DependsOn: ListenerHTTPS
   Certificate:
     Type: AWS::CertificateManager::Certificate
@@ -106,7 +109,7 @@ Resources:
       ValidationMethod: DNS
       DomainValidationOptions:
         - DomainName: !Ref DomainName
-          HostedZoneId: Z07011291DYPENE0XZTE8
+          HostedZoneId: Z01924471UI676V2FMDJ8
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
@@ -118,7 +121,7 @@ Resources:
       Name: !Join [ '', [ !Ref Cluster, TargetGroup ] ]
       Port: 8080
       Protocol: HTTP
-      VpcId: vpc-03a0536bb9688322b
+      VpcId: vpc-045d9fd734c952026
       TargetGroupAttributes:
         - Key: deregistration_delay.timeout_seconds
           Value: 60 # default is 300
@@ -156,13 +159,13 @@ Resources:
       SecurityGroups:
         - !GetAtt LoadBalancerSecurityGroup.GroupId
       Subnets:
-        - subnet-0c412b2893e1cc980
-        - subnet-0de05c6b8c43703c5
-        - subnet-061a8897e8694d873
+        - subnet-0bd479863cc99d545
+        - subnet-0f8409b09ee773f89
+        - subnet-0b049c3b1b98f38c6
   DNSRecord:
     Type: AWS::Route53::RecordSet
     Properties:
-      HostedZoneId: Z07011291DYPENE0XZTE8
+      HostedZoneId: Z01924471UI676V2FMDJ8
       Name: !Ref DomainName
       Type: A
       AliasTarget:

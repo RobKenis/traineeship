@@ -7,6 +7,6 @@ POST http://localhost:8080/todo
 Content-Type: application/json
 
 {
-  "title": "Create a new todo"
+  "title": "Create another todo"
 }
 
