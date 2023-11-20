@@ -2,7 +2,7 @@ name: Publish to Pages
 
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
@@ -32,7 +34,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Build site
-        run:  mkdocs build --verbose --clean --strict
+        run: mkdocs build --verbose --clean --strict
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
