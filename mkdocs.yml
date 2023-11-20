@@ -39,6 +39,7 @@ nav:
   - Glue: content/aws/glue/README.md
   - Messaging: content/aws/messaging/index.md
   - Lambda: content/aws/lambda/index.md
+  - EMR: content/aws/emr/README.md
   - SageMaker: content/aws/sagemaker/README.md
 #  - QuickSight: content/aws/quicksight/README.md
 #  - Grand Finale: content/aws/final/index.md
