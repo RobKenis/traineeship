@@ -10,3 +10,18 @@ portable. Once your ETL job is ready, you can schedule it to run on AWS Glue's f
 environment.
 
 [https://aws.amazon.com/glue/getting-started/](https://aws.amazon.com/glue/getting-started/)
+
+You can use the [us-500.csv](us-500.csv) dataset to create a table in the AWS Glue Data Catalog. Add the file under
+a separate key in the S3 bucket, e.g. `glue/us-500.csv`.
+
+## Create a Crawler
+
+[Glue Console](https://eu-west-1.console.aws.amazon.com/glue/home?region=eu-west-1#/v2/data-catalog/crawlers)
+
+## Query the data
+
+After the crawler has finished, you can query the data in the Athena console.
+
+```sql
+SELECT * FROM rob."us-500" LIMIT 10;
+```
