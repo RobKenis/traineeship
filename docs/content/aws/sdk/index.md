@@ -71,3 +71,26 @@ DynamoDbClient dynamoDbClient=DynamoDbClient.builder()
         .region(Region.EU_CENTRAL_1)
         .build();
 ```
+
+## Python SDK
+
+The Python SDK is used to interact with AWS services from Python code. It is available on PyPi and can be added to a
+project using the following dependency:
+
+```bash
+pip install boto3
+```
+
+### S3
+
+Following [documentation](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html) describes
+how to use the Python SDK to interact with S3.
+
+```python
+import boto3
+
+client = boto3.client('s3')
+
+# List all buckets
+response = client.list_buckets()
+```
