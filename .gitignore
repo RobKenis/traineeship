@@ -6,3 +6,6 @@ venv/
 
 # Axxes CloudFormation
 users.yaml
+
+# Mkdocs
+site/
