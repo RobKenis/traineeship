@@ -35,11 +35,12 @@ nav:
 #  - DNS and Service Discovery: content/aws/route53/index.md
 #  - Monitoring: content/aws/monitoring/index.md
   - Simple Storage Service: content/aws/s3/index.md
-  - Athena: content/aws/athena/index.md
-  - Glue: content/aws/glue/index.md
+  - Athena: content/aws/athena/README.md
+  - Glue: content/aws/glue/README.md
   - Messaging: content/aws/messaging/index.md
   - Lambda: content/aws/lambda/index.md
-  - SageMaker: content/aws/sagemaker/index.md
+  - SageMaker: content/aws/sagemaker/README.md
+  - QuickSight: content/aws/quicksight/README.md
 #  - Grand Finale: content/aws/final/index.md
 #  - Build something: content/aws/final/development.md
   - Build something: content/aws/final/data.md
