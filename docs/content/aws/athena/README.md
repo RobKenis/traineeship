@@ -4,6 +4,10 @@ Amazon [Athena](https://aws.amazon.com/athena/) is an interactive query service 
 Amazon S3 using standard SQL. Athena is serverless, so there is no infrastructure to manage, and you pay only for the
 queries that you run.
 
+## Dataset
+
+Put the [simple.csv](simple.csv) file in an S3 bucket.
+
 ## Create a database
 
 ```sql
