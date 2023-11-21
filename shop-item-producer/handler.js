@@ -63,7 +63,7 @@ exports.handler = async (event) => {
             .sort((a, b) => {
                 return a[1] < b[1] ? -1 : 1;
             })
-            .slice(0, 5)
+            .slice(0, Math.floor(Math.random() * (8 - 3 + 1) + 3))
             .map(a => a[0]),
     };
     const params = {
