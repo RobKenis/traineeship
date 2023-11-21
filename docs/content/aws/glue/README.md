@@ -16,7 +16,9 @@ a separate key in the S3 bucket, e.g. `glue/us-500.csv`.
 
 ## Create a Crawler
 
-[Glue Console](https://eu-west-1.console.aws.amazon.com/glue/home?region=eu-west-1#/v2/data-catalog/crawlers)
+Use the [Glue Console](https://eu-west-1.console.aws.amazon.com/glue/home?region=eu-west-1#/v2/data-catalog/crawlers) to
+create a crawler on S3, this [tutorial](https://www.youtube.com/watch?v=M5ptG0YaqAs) on
+YouTube can explain it better than I ever will.
 
 ## Query the data
 
