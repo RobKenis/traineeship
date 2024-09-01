@@ -3,67 +3,57 @@ repo_url: https://github.com/RobKenis/traineeship
 repo_name: RobKenis/traineeship
 
 plugins:
-  - search
-  - git-revision-date-localized
+- search
+- git-revision-date-localized
 
 theme:
   name: material
   icon:
     repo: fontawesome/brands/github
   palette:
-    # Palette toggle for light mode
-    - scheme: default
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-    # Palette toggle for dark mode
-    - scheme: slate
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
+  # Palette toggle for light mode
+  - scheme: default
+    toggle:
+      icon: material/brightness-7
+      name: Switch to dark mode
+  # Palette toggle for dark mode
+  - scheme: slate
+    toggle:
+      icon: material/brightness-4
+      name: Switch to light mode
 
 nav:
-  - Welcome: index.md
-  - Console: content/aws/console/introduction.md
-  - EC2: content/aws/ec2/setting-up.md
-  - CloudFormation: content/aws/cloudformation/index.md
-#  - Ansible: content/ansible/aws.md
-  - Networking: content/aws/networking/index.md
-#  - DynamoDB: content/aws/dynamodb/index.md
-  - AWS SDK: content/aws/sdk/index.md
-  - Elastic Container Service: content/aws/ecs/index.md
-#  - DNS and Service Discovery: content/aws/route53/index.md
-#  - Monitoring: content/aws/monitoring/index.md
-  - Simple Storage Service: content/aws/s3/index.md
-  - Athena: content/aws/athena/README.md
-  - Glue: content/aws/glue/README.md
-  - Messaging: content/aws/messaging/index.md
-  - Lambda: content/aws/lambda/index.md
-  - EMR: content/aws/emr/README.md
-  - SageMaker: content/aws/sagemaker/README.md
-#  - QuickSight: content/aws/quicksight/README.md
-#  - Grand Finale: content/aws/final/index.md
-#  - Build something: content/aws/final/development.md
-  - Build something: content/aws/final/data.md
+- Welcome: index.md
+- Console: content/aws/console/introduction.md
+- EC2: content/aws/ec2/setting-up.md
+- CloudFormation: content/aws/cloudformation/index.md
+- Networking: content/aws/networking/index.md
+- DynamoDB: content/aws/dynamodb/index.md
+- AWS SDK: content/aws/sdk/index.md
+- Elastic Container Service: content/aws/ecs/index.md
+- Simple Storage Service: content/aws/s3/index.md
+- Messaging: content/aws/messaging/index.md
+- Lambda: content/aws/lambda/index.md
+- Build something: content/aws/final/development.md
 
 markdown_extensions:
-  - admonition
-  - pymdownx.highlight:
-      anchor_linenums: true
-      line_spans: __span
-      pygments_lang_class: true
-  - pymdownx.inlinehilite
-  - pymdownx.snippets:
-      base_path: .
-  - pymdownx.superfences:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
-  - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
-  - def_list
-  - pymdownx.tasklist:
-      custom_checkbox: true
-  - pymdownx.details
+- admonition
+- pymdownx.highlight:
+    anchor_linenums: true
+    line_spans: __span
+    pygments_lang_class: true
+- pymdownx.inlinehilite
+- pymdownx.snippets:
+    base_path: .
+- pymdownx.superfences:
+    custom_fences:
+    - name: mermaid
+      class: mermaid
+      format: !!python/name:pymdownx.superfences.fence_code_format
+- pymdownx.emoji:
+    emoji_index: !!python/name:material.extensions.emoji.twemoji
+    emoji_generator: !!python/name:material.extensions.emoji.to_svg
+- def_list
+- pymdownx.tasklist:
+    custom_checkbox: true
+- pymdownx.details

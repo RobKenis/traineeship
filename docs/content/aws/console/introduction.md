@@ -3,8 +3,8 @@
 ## Logging in
 
 Axxes accounts are managed through Active Directory. In the top left corner in Outlook, there should be a button with
-**AWS SSO**. A menu should show up with all available accounts, pick **traineeship-2023**
-https://axxes.awsapps.com/start#/
+**AWS SSO**. A menu should show up with all available accounts, pick **traineeship-2024**
+<https://axxes.awsapps.com/start#/>
 
 ## Picking a region
 
