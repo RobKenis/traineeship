@@ -21,16 +21,15 @@ theme:
     toggle:
       icon: material/brightness-4
       name: Switch to light mode
-
 nav:
 - Welcome: index.md
 - Console: content/aws/console/introduction.md
 - EC2: content/aws/ec2/setting-up.md
 - CloudFormation: content/aws/cloudformation/index.md
 - Networking: content/aws/networking/index.md
+- Elastic Container Service: content/aws/ecs/index.md
 - DynamoDB: content/aws/dynamodb/index.md
 - AWS SDK: content/aws/sdk/index.md
-- Elastic Container Service: content/aws/ecs/index.md
 - Simple Storage Service: content/aws/s3/index.md
 - Messaging: content/aws/messaging/index.md
 - Lambda: content/aws/lambda/index.md

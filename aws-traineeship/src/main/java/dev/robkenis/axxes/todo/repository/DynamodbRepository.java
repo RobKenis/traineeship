@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@ApplicationScoped
+// @ApplicationScoped
 public class DynamodbRepository implements TodoRepository {
 
     private final DynamoDbClient dynamoDbClient;

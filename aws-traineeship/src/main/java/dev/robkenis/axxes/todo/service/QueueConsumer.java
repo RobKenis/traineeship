@@ -8,7 +8,7 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.ReceiveMessageResponse;
 
-@ApplicationScoped
+// @ApplicationScoped
 public class QueueConsumer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QueueConsumer.class);
@@ -21,7 +21,7 @@ public class QueueConsumer {
         this.sqsClient = SqsClient.builder().region(Region.EU_WEST_1).build();
     }
 
-    @Scheduled(every = "10s")
+    // @Scheduled(every = "10s")
     public void consume() {
         ReceiveMessageResponse receiveMessageResponse = sqsClient.receiveMessage(builder -> builder.queueUrl(QUEUE_URL));
         receiveMessageResponse.messages().forEach(message -> {
