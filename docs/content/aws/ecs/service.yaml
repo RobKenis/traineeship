@@ -96,7 +96,4 @@ Resources:
           AssignPublicIp: ENABLED
           SecurityGroups:
           - !GetAtt SecurityGroup.GroupId
-          Subnets:
-          - !Ref SubnetOne
-          - !Ref SubnetTwo
-          - !Ref SubnetThree
+          Subnets: !Ref Subnets

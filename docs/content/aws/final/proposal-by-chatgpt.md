@@ -29,8 +29,7 @@ Build a system where files uploaded to an S3 bucket trigger a series of AWS serv
 #### **2. Lambda Setup**
 - Create a Lambda function that is triggered by S3 events (i.e., when a file is uploaded).
 - The Lambda function should:
-  1. Extract metadata from the file (e.g., file name, size, upload timestamp).
-    - <https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html>
+  1. Extract metadata from the file (e.g., file name, size, upload timestamp). [S3 GetObject Documentation](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html)
   2. Store this metadata in a DynamoDB table.
   3. Publish a notification to an SNS topic (on success or failure).
   4. Send error messages to an SQS queue if there’s an issue processing the file.
@@ -71,12 +70,12 @@ def lambda_handler(event, context):
 
 #### **4. SNS Setup**
 - Create an SNS topic for notifications about file processing.
-- Subscribe to the SNS topic using email, so participants can see notifications in real time.
+- Subscribe to the SNS topic using email, so users can see notifications in real time.
 - The Lambda function will publish a success or failure notification after processing.
 
 #### **5. SQS Setup**
 - Create an SQS queue to collect error messages from the Lambda function if file processing fails.
-- Participants can periodically check the queue for any error messages and understand how the system handles failures.
+- Users can periodically check the queue for any error messages and understand how the system handles failures.
 
 #### **6. ECS Setup (Optional if Time Allows)**
 - Deploy a simple web application on ECS that provides:
@@ -85,32 +84,27 @@ def lambda_handler(event, context):
   
 The web application could be a simple Node.js or Python Flask application that interacts with S3 for uploads and DynamoDB to display results.
 
-**ECS Configuration Steps:**
-1. Create a Docker container for the web app.
-2. Push the container to Amazon ECR.
-3. Use Amazon ECS to launch the container as a service.
-
 ### **Task Breakdown for Participants**
 
-1. **Setup S3 Bucket**: 
+- **Setup S3 Bucket**: 
    - Create an S3 bucket.
    - Define permissions for Lambda to access it.
 
-2. **Create Lambda Function**:
+- **Create Lambda Function**:
    - Write and deploy a Lambda function.
    - Configure the S3 trigger to invoke the Lambda function when a file is uploaded.
 
-3. **Set Up DynamoDB Table**:
+- **Set Up DynamoDB Table**:
    - Create a DynamoDB table for storing file metadata.
 
-4. **Configure SNS**:
+- **Configure SNS**:
    - Set up an SNS topic and subscribe an email or SMS endpoint to receive notifications.
    - Update the Lambda function to send notifications.
 
-5. **Create SQS Queue**:
+- **Create SQS Queue**:
    - Set up an SQS queue to handle errors from Lambda.
 
-6. **Deploy Web Application on ECS** (Optional):
+- **Deploy Web Application on ECS** (Optional):
    - Deploy a simple web app for file uploads and view the processed file metadata.
 
 ### **Stretch Goals (Optional)**
@@ -119,7 +113,7 @@ The web application could be a simple Node.js or Python Flask application that i
 - Add a retry mechanism using SQS Dead-Letter Queue (DLQ).
 
 ### **Expected Outcome**
-By the end of the exercise, participants will have a working system where:
+By the end of the exercise, users will have a working system where:
 - Files uploaded to S3 trigger a Lambda function.
 - Metadata is stored in DynamoDB.
 - Success or failure notifications are sent via SNS.
