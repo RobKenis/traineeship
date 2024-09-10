@@ -1,4 +1,3 @@
----
 AWSTemplateFormatVersion: 2010-09-09
 Parameters:
   Image:
@@ -9,6 +8,13 @@ Parameters:
     Type: String
     Default: rob-ecs-cluster
     Description: Full name of the ECS cluster
+  Subnets:
+    Type: List<AWS::EC2::Subnet::Id>
+    Description: Subnets to deploy the service in
+  ApplicationPort:
+    Type: Number
+    Default: 8080
+    Description: The port the application listens on
 Resources:
   EcsServiceRole:
     Type: 'AWS::IAM::Role'
@@ -16,55 +22,55 @@ Resources:
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - "ecs-tasks.amazonaws.com"
-            Action:
-              - 'sts:AssumeRole'
+        - Effect: Allow
+          Principal:
+            Service:
+            - "ecs-tasks.amazonaws.com"
+          Action:
+          - 'sts:AssumeRole'
       Path: /
       Policies:
-        - PolicyName: PullImage
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              - Effect: Allow
-                Action:
-                  - "ecr:GetAuthorizationToken"
-                  - "ecr:BatchCheckLayerAvailability"
-                  - "ecr:GetDownloadUrlForLayer"
-                  - "ecr:BatchGetImage"
-                  - "logs:CreateLogStream"
-                  - "logs:PutLogEvents"
-                  - "sqs:*"
-                  - "dynamodb:*"
-                Resource: '*'
+      - PolicyName: PullImage
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+          - Effect: Allow
+            Action:
+            - "ecr:GetAuthorizationToken"
+            - "ecr:BatchCheckLayerAvailability"
+            - "ecr:GetDownloadUrlForLayer"
+            - "ecr:BatchGetImage"
+            - "logs:CreateLogStream"
+            - "logs:PutLogEvents"
+            - "sqs:*"
+            - "dynamodb:*"
+            Resource: '*'
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
       RequiresCompatibilities:
-        - "EC2"
-        - "FARGATE"
+      - "EC2"
+      - "FARGATE"
       NetworkMode: awsvpc
       Cpu: 256
       Memory: 512
       TaskRoleArn: !GetAtt EcsServiceRole.Arn
       ExecutionRoleArn: !GetAtt EcsServiceRole.Arn
       ContainerDefinitions:
-        - Name: "traineeship"
-          Image: !Ref Image
-          Cpu: 256
-          Memory: 512
-          Essential: true
-          PortMappings:
-            - ContainerPort: 8080
-              HostPort: 8080
-          LogConfiguration:
-            LogDriver: awslogs
-            Options:
-              awslogs-group: /ecs/traineeship
-              awslogs-region: eu-west-1
-              awslogs-stream-prefix: ecs
+      - Name: "traineeship"
+        Image: !Ref Image
+        Cpu: 256
+        Memory: 512
+        Essential: true
+        PortMappings:
+        - ContainerPort: !Ref ApplicationPort
+          HostPort: !Ref ApplicationPort
+        LogConfiguration:
+          LogDriver: awslogs
+          Options:
+            awslogs-group: /ecs/traineeship
+            awslogs-region: eu-west-1
+            awslogs-stream-prefix: ecs
   LogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
@@ -75,10 +81,10 @@ Resources:
     Properties:
       GroupDescription: Allow HTTP
       SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 8080
-          ToPort: 8080
-          CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: !Ref ApplicationPort
+        ToPort: !Ref ApplicationPort
+        CidrIp: 0.0.0.0/0
   EcsService:
     Type: AWS::ECS::Service
     Properties:
@@ -89,8 +95,8 @@ Resources:
         AwsvpcConfiguration:
           AssignPublicIp: ENABLED
           SecurityGroups:
-            - !GetAtt SecurityGroup.GroupId
+          - !GetAtt SecurityGroup.GroupId
           Subnets:
-            - subnet-0bd479863cc99d545
-            - subnet-0f8409b09ee773f89
-            - subnet-0b049c3b1b98f38c6
+          - !Ref SubnetOne
+          - !Ref SubnetTwo
+          - !Ref SubnetThree

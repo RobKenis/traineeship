@@ -1,6 +1,7 @@
----
 Resources:
   MyRepository:
     Type: AWS::ECR::Repository
     Properties:
       RepositoryName: !Ref AWS::StackName
+      ImageScanningConfiguration:
+        scanOnPush: true

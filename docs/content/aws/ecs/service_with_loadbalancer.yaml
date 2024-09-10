@@ -1,4 +1,3 @@
----
 AWSTemplateFormatVersion: 2010-09-09
 Parameters:
   Image:
@@ -9,10 +8,27 @@ Parameters:
     Type: String
     Default: rob
     Description: Full name of the ECS cluster
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Description: VPC ID
+  Subnets:
+    Type: List<AWS::EC2::Subnet::Id>
+    Description: Subnets to deploy the service in
+  ApplicationPort:
+    Type: Number
+    Default: 8080
+    Description: The port the application listens on
+  HealthCheckPath:
+    Type: String
+    Default: '/q/health'
+    Description: The path to health check
   DomainName:
     Type: String
     Default: rob.traineeship-2022.axxes.cloud
     Description: DNS name for your service
+  HostedZoneId:
+    Type: AWS::Route53::HostedZone::Id
+    Description: Hosted zone ID for the domain name
 Resources:
   EcsServiceRole:
     Type: 'AWS::IAM::Role'
@@ -20,68 +36,68 @@ Resources:
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - "ecs-tasks.amazonaws.com"
-            Action:
-              - 'sts:AssumeRole'
+        - Effect: Allow
+          Principal:
+            Service:
+            - "ecs-tasks.amazonaws.com"
+          Action:
+          - 'sts:AssumeRole'
       Path: /
       Policies:
-        - PolicyName: PullImage
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              - Effect: Allow
-                Action:
-                  - "ecr:GetAuthorizationToken"
-                  - "ecr:BatchCheckLayerAvailability"
-                  - "ecr:GetDownloadUrlForLayer"
-                  - "ecr:BatchGetImage"
-                  - "logs:CreateLogStream"
-                  - "logs:PutLogEvents"
-                  - "dynamodb:PutItem"
-                  - "dynamodb:Scan"
-                  - "sqs:ReceiveMessage"
-                  - "sqs:DeleteMessage"
-                Resource: '*'
+      - PolicyName: PullImage
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+          - Effect: Allow
+            Action:
+            - "ecr:GetAuthorizationToken"
+            - "ecr:BatchCheckLayerAvailability"
+            - "ecr:GetDownloadUrlForLayer"
+            - "ecr:BatchGetImage"
+            - "logs:CreateLogStream"
+            - "logs:PutLogEvents"
+            - "dynamodb:PutItem"
+            - "dynamodb:Scan"
+            - "sqs:ReceiveMessage"
+            - "sqs:DeleteMessage"
+            Resource: '*'
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
       RequiresCompatibilities:
-        - "EC2"
-        - "FARGATE"
+      - "EC2"
+      - "FARGATE"
       NetworkMode: awsvpc
       Cpu: 256
       Memory: 512
       TaskRoleArn: !GetAtt EcsServiceRole.Arn
       ExecutionRoleArn: !GetAtt EcsServiceRole.Arn
       ContainerDefinitions:
-        - Name: "traineeship"
-          Image: !Ref Image
-          Cpu: 256
-          Memory: 512
-          Essential: true
-          PortMappings:
-            - ContainerPort: 8080
-              HostPort: 8080
-          LogConfiguration:
-            LogDriver: awslogs
-            Options:
-              awslogs-region: eu-west-1
-              awslogs-group: !Sub '/traineeship/${AWS::StackName}/ecs/'
-              awslogs-stream-prefix: traineeship
+      - Name: "traineeship"
+        Image: !Ref Image
+        Cpu: 256
+        Memory: 512
+        Essential: true
+        PortMappings:
+        - ContainerPort: !Ref ApplicationPort
+          HostPort: !Ref ApplicationPort
+        LogConfiguration:
+          LogDriver: awslogs
+          Options:
+            awslogs-region: eu-west-1
+            awslogs-group: !Sub '/traineeship/${AWS::StackName}/ecs/'
+            awslogs-stream-prefix: traineeship
     DependsOn:
-      - LogGroup
+    - LogGroup
   SecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Allow HTTP
       SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 8080
-          ToPort: 8080
-          CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: !Ref ApplicationPort
+        ToPort: !Ref ApplicationPort
+        CidrIp: 0.0.0.0/0
   EcsService:
     Type: AWS::ECS::Service
     Properties:
@@ -89,18 +105,15 @@ Resources:
       DesiredCount: 1
       TaskDefinition: !Ref TaskDefinition
       LoadBalancers:
-        - TargetGroupArn: !Ref TargetGroup
-          ContainerPort: 8080
-          ContainerName: traineeship
+      - TargetGroupArn: !Ref TargetGroup
+        ContainerPort: !Ref ApplicationPort
+        ContainerName: traineeship
       NetworkConfiguration:
         AwsvpcConfiguration:
           AssignPublicIp: ENABLED
           SecurityGroups:
-            - !GetAtt SecurityGroup.GroupId
-          Subnets:
-            - subnet-0bd479863cc99d545
-            - subnet-0f8409b09ee773f89
-            - subnet-0b049c3b1b98f38c6
+          - !GetAtt SecurityGroup.GroupId
+          Subnets: !Ref Subnets
     DependsOn: ListenerHTTPS
   Certificate:
     Type: AWS::CertificateManager::Certificate
@@ -108,64 +121,78 @@ Resources:
       DomainName: !Ref DomainName
       ValidationMethod: DNS
       DomainValidationOptions:
-        - DomainName: !Ref DomainName
-          HostedZoneId: Z01924471UI676V2FMDJ8
+      - DomainName: !Ref DomainName
+        HostedZoneId: !Ref HostedZoneId
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       HealthCheckIntervalSeconds: 10
-      HealthCheckPath: '/q/health'
+      HealthCheckPath: !Ref HealthCheckPath
       HealthCheckTimeoutSeconds: 5
       UnhealthyThresholdCount: 2
       HealthyThresholdCount: 2
-      Name: !Join [ '', [ !Ref Cluster, TargetGroup ] ]
-      Port: 8080
+      Name: !Join ['', [!Ref Cluster, TargetGroup]]
+      Port: !Ref ApplicationPort
       Protocol: HTTP
-      VpcId: vpc-045d9fd734c952026
+      VpcId: !Ref VpcId
       TargetGroupAttributes:
-        - Key: deregistration_delay.timeout_seconds
-          Value: 60 # default is 300
+      - Key: deregistration_delay.timeout_seconds
+        Value: 60 # default is 300
       TargetType: ip
   ListenerHTTPS:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
       DefaultActions:
-        - TargetGroupArn: !Ref TargetGroup
-          Type: forward
+      - TargetGroupArn: !Ref TargetGroup
+        Type: forward
       LoadBalancerArn: !Ref LoadBalancer
       Port: 443
       Protocol: HTTPS
       Certificates:
-        - CertificateArn: !Ref Certificate
+      - CertificateArn: !Ref Certificate
+  ListenerHTTP:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+      - Type: redirect
+        RedirectConfig:
+          StatusCode: HTTP_301
+          Protocol: HTTPS
+          Port: '443'
+          Host: '#{host}'
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 80
+      Protocol: HTTP
   LoadBalancerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: !Join [ '', [ !Ref Cluster, LoadBalancerSecurityGroup ] ]
+      GroupDescription: !Join ['', [!Ref Cluster, LoadBalancerSecurityGroup]]
       SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 443
-          ToPort: 443
-          CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 443
+        ToPort: 443
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 80
+        ToPort: 80
+        CidrIp: 0.0.0.0/0
   LoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
       LoadBalancerAttributes:
-        # this is the default, but is specified here in case it needs to be changed
-        - Key: idle_timeout.timeout_seconds
-          Value: 60
-      Name: !Join [ '', [ !Ref Cluster, LoadBalancer ] ]
+      # this is the default, but is specified here in case it needs to be changed
+      - Key: idle_timeout.timeout_seconds
+        Value: 60
+      Name: !Join ['', [!Ref Cluster, LoadBalancer]]
       # "internal" is also an option
       Scheme: internet-facing
       SecurityGroups:
-        - !GetAtt LoadBalancerSecurityGroup.GroupId
-      Subnets:
-        - subnet-0bd479863cc99d545
-        - subnet-0f8409b09ee773f89
-        - subnet-0b049c3b1b98f38c6
+      - !GetAtt LoadBalancerSecurityGroup.GroupId
+      Subnets: !Ref Subnets
   DNSRecord:
     Type: AWS::Route53::RecordSet
     Properties:
-      HostedZoneId: Z01924471UI676V2FMDJ8
+      HostedZoneId: !Ref HostedZoneId
       Name: !Ref DomainName
       Type: A
       AliasTarget:
