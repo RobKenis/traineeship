@@ -33,7 +33,7 @@ nav:
 - Simple Storage Service: content/aws/s3/index.md
 - Messaging: content/aws/messaging/index.md
 - Lambda: content/aws/lambda/index.md
-- Build something: content/aws/final/development.md
+- Build something: content/aws/final/proposal-by-chatgpt.md
 
 markdown_extensions:
 - admonition
