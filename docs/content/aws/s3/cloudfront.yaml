@@ -9,6 +9,9 @@ Parameters:
     Type: String
     Default: website-van-rob.traineeship-2021.axxes.cloud
     Description: DNS name to attach to your CloudFront
+  HostedZoneId:
+    Type: AWS::Route53::HostedZone::Id
+    Description: Hosted zone ID for the domain name
 Resources:
   Certificate:
     Type: AWS::CertificateManager::Certificate
@@ -17,7 +20,7 @@ Resources:
       ValidationMethod: DNS
       DomainValidationOptions:
         - DomainName: !Ref DomainName
-          HostedZoneId: Z07011291DYPENE0XZTE8
+          HostedZoneId: !Ref HostedZoneId
   CloudFront:
     Type: AWS::CloudFront::Distribution
     Properties:
@@ -49,7 +52,7 @@ Resources:
   DNSRecord:
     Type: AWS::Route53::RecordSet
     Properties:
-      HostedZoneId: Z07011291DYPENE0XZTE8
+      HostedZoneId: !Ref HostedZoneId
       Name: !Ref DomainName
       Type: A
       AliasTarget:
